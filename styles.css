@@ -1,0 +1,331 @@
+/* styles.css */
+/* put near top of file */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* fluid type scale (min, preferred, max) */
+:root{
+  --fs-h1: clamp(36px, 4.5vw, 56px);
+  --fs-body: clamp(15px, 1.2vw + 1rem, 18px);
+  --fs-button: clamp(14px, 1vw + 0.8rem, 16px);
+
+  --lh-h1: 1.05;
+  --lh-body: 1.6;
+}
+
+body {
+    margin: 0;
+    font-family: monospace;
+    background-color: black;
+}
+
+.navbar .container {
+    max-width: 1110px;
+    margin: 0 auto;          
+    padding: 0 20px;          
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #1B1B1B;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 90px;
+    display: flex;
+    width: fit-content;
+    gap: 70px;
+    align-items: center;
+}
+
+.social-links {
+    list-style: none;
+    margin: 0;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-right: 70px;
+    display: flex;
+    width: fit-content;
+    gap: 10px;
+    align-items: center;
+}
+
+.social-links li { margin: 0; }
+.social-links a { padding: 4px; }
+
+.nav-links a,
+.social-links a {
+    text-decoration: none;
+    display: inline-block;
+    color: rgb(183, 183, 183);
+    padding: 0;               
+    gap: 24px;                
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;         
+}
+
+/* nav link hover/focus: subtle underline reveal + color change */
+.nav-links a {
+    position: relative;
+    transition: color .18s ease;
+}
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #62BA1B;
+    bottom: -8px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .18s ease;
+}
+.nav-links a:hover,
+.nav-links a:focus {
+    color: #fff;
+}
+.nav-links a:hover::after,
+.nav-links a:focus::after {
+    transform: scaleX(1);
+}
+
+/* social icon sizing: tiny icons + touch padding so they fit in the navbar */
+.social-links a {
+    position: relative;
+    z-index: 50;
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px; /* keeps a tappable target while keeping icons small */
+}
+
+.social-links a img {
+    width: clamp(24px, 1.2vw, 24px); /* tiny but stays usable on large screens */
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: transform .18s ease, filter .18s ease, opacity .18s ease;
+}
+
+.social-links a:hover img,
+.social-links a:focus img,
+.social-links a:active img {
+    transform: translateY(-4px);
+    filter: none;
+    opacity: 1;
+}
+
+@media (max-width: 800px) {
+  .nav-links,
+  .social-links { gap: 12px; }
+  .navbar .container { padding: 0 12px; }
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(240px, 420px); /* portrait column constrained */
+    padding: 40px 32px; /* smaller side padding so interior has room */
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.intro {
+    align-self: center;              /* centers the cell vertically in the row */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;        /* centers heading/text/button inside the cell */
+    width: 100%;
+    max-width: 560px;   
+    padding-left: 75px; 
+    position: relative;
+    overflow-wrap: break-word; /* let long words break */
+}
+
+.intro h1 {
+    font-size: var(--fs-h1);
+    line-height: var(--lh-h1);
+    color: white;
+    margin: 0 0 20px;
+}
+
+.intro h1 { font-size: 2.25rem; } /* default */
+@media (min-width: 900px) { .intro h1 { font-size: 3.25rem; } }
+@media (max-width: 420px) { .intro h1 { font-size: 1.75rem; } }
+
+.intro p {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    margin-bottom: 1.25rem;
+    color: rgb(183, 183, 183);
+}
+
+.intro button {
+    font-family: monospace;
+    display: inline-block;
+    max-width: 50%;
+    white-space: normal;      /* allow wrapping if needed */
+    box-sizing: border-box;
+    background-color: #3F8E00;
+    color: white;
+    border: 1px solid #62BA1B;
+    font-size: var(--fs-button);
+    margin-top: 20px;
+    padding: clamp(24px, 0.6vw + 6px, 12px) clamp(16px, 1.2vw + 10px, 28px);
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 18px 24px rgba(98,186,27,0.36);
+    position: relative;
+    z-index: 2;
+    transition: box-shadow .18s ease, transform .12s ease;
+}
+
+.intro button:hover,
+.intro button:focus {
+    box-shadow: 0 18px 24px rgba(98,186,27,0.36);
+    transform: translateY(-4px);
+}
+/* soft, full-bleed halo behind the intro button */
+.intro button::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    border-radius: 12px;
+    background: rgba(98,186,27,0.12);
+    filter: blur(28px);
+    z-index: 1;
+    pointer-events: none;
+}
+.intro button:hover::after,
+.intro button:focus::after {
+    background: rgba(98,186,27,0.16);
+    filter: blur(34px);
+}
+@media (max-width: 800px) {
+  .hero-grid { padding: 28px 16px; gap: 18px; }
+  .intro button { padding: 8px 14px; font-size: 14px; }
+}
+
+.portrait {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portrait img {
+    max-width: 90%;
+    max-height: 90%;
+    height: auto;
+    border-radius: 275px;
+    display: block;
+}
+
+/* ensure footer heading appears above logos */
+footer {
+    position: relative;
+}
+
+.logos-title {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: left;
+    align-self: end;
+    margin: 0 0 6px 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* company logos as a grid so the title can sit above the first logo */
+.company-logos {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 150px;
+    grid-template-rows: auto 70px; /* row 1 = title, row 2 = logos */
+    gap: 8px 25px;
+    justify-content: center;
+    align-items: start;
+    padding: 24px 0 48px;
+}
+
+/* keep logo area lower in stacking order */
+.company-logos {
+    position: relative;
+    z-index: 1;
+}
+
+.company-logos .logo-wrap,
+.company-logos .logo-wrap::after {
+    z-index: 0;
+}
+
+/* wrapper for each logo so we can apply an overlay shade */
+.company-logos .logo-wrap {
+    width: 150px;
+    height: 70px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 6px;
+    background: transparent;
+    padding: 6px; /* small inner padding to create a box look */
+    box-sizing: border-box;
+    grid-row: 2; /* ensure logos sit in second row */
+}
+
+.company-logos .logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    /* lighter grayscale: less desaturated and slightly dimmer */
+    filter: grayscale(70%) contrast(70%) brightness(70%);
+    transition: opacity 220ms ease, transform 220ms ease;
+}
+
+/* subtle white overlay using blend to brighten dark text in logos */
+.company-logos .logo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.22);
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+.logos-title {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+    text-align: left;
+    align-self: end;
+    margin: 0 0 15px 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+@media (max-width: 520px) {
+    .company-logos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .company-logos .logo-wrap { grid-row: auto; }
+    .logos-title { order: -1; }
+}
+
